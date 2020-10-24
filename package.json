@@ -4,7 +4,7 @@
   "private": false,
   "scripts": {
     "start": "vue-cli-service serve demo/main.js",
-    "build--package": "vue-cli-service build --target lib --name vue-countdown src/index.js",
+    "build--package": "vue-cli-service build --target lib --name vue-countdown --report src/index.js",
     "build--demo": "cross-env BUILD_DEMO=true vue-cli-service build --dest docs demo/main.js",
     "test": "vue-cli-service test:unit",
     "test--watch": "vue-cli-service test:unit --watch",
@@ -12,8 +12,8 @@
   },
   "main": "dist/vue-countdown.umd.js",
   "files": [
-    "dist/vue-countdown.umd.js",
-    "dist/vue-countdown.umd.js.map"
+    "dist/vue-countdown.umd.min.js",
+    "dist/vue-countdown.umd.min.js.map"
   ],
   "author": "Alan Smith <alan@mralansmith.com>",
   "license": "MIT",
@@ -31,24 +31,20 @@
     "url": "git+https://github.com/smithalan92/vue-countdown.git"
   },
   "dependencies": {
-    "core-js": "^3.6.5",
     "date-fns": "^2.16.1",
     "vue": "^3.0.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-unit-jest": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-airbnb": "^5.0.2",
     "@vue/test-utils": "^2.0.0-0",
-    "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.2",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^7.0.0-0",
-    "typescript": "~3.9.3",
     "vue-jest": "^5.0.0-0"
   }
 }
