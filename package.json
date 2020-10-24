@@ -1,6 +1,6 @@
 {
   "name": "@smithalan2/vue-countdown",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "scripts": {
     "start": "vue-cli-service serve demo/main.js",
@@ -15,6 +15,21 @@
     "dist/vue-countdown.umd.js",
     "dist/vue-countdown.umd.js.map"
   ],
+  "author": "Alan Smith <alan@mralansmith.com>",
+  "license": "MIT",
+  "keywords": [
+    "vuejs",
+    "vue3",
+    "countdown",
+    "timer"
+  ],
+  "bugs": {
+    "url": "https://github.com/smithalan92/vue-countdown/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smithalan92/vue-countdown.git"
+  },
   "dependencies": {
     "core-js": "^3.6.5",
     "date-fns": "^2.16.1",
