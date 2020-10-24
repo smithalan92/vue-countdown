@@ -1,6 +1,17 @@
 <template>
+  <header class="header">
+    <h1>Vue Countdown</h1>
+    <div class="codeblock">
+      npm i --save @smithalan2/vue-countdown
+    </div>
+    <a
+      href="https://github.com/smithalan92/vue-countdown"
+      target="_blank">
+      github.com/smithalan92/vue-countdown
+    </a>
+  </header>
   <div>
-    <countdown
+    <vue-countdown
       ref="countdown"
       :end-date-time="endDateTime"
       :start-immediately="true"
@@ -8,21 +19,26 @@
       <template
         v-slot:default="{ countdown }">
         <div
-          class="countdown-progress"
+          class="countdown-data"
           v-if="!hasCountdownFinished">
-          <span>{{ countdown.remainingYears.text }}</span>,
-          <span>{{ countdown.remainingMonths.text }}</span>,
-          <span>{{ countdown.remainingWeeks.text }}</span>,
-          <span>{{ countdown.remainingDays.text }}</span>,
-          <span>{{ countdown.remainingHours.text }}</span>,
-          <span>{{ countdown.remainingMinutes.text }}</span>,
-          <span>{{ countdown.remainingSeconds.text }}</span>
+          <div class="countdown-progress">
+            <div class="countdown-time">{{ countdown.remainingYears.text }}</div>
+            <div class="countdown-time">{{ countdown.remainingMonths.text }}</div>
+            <div class="countdown-time">{{ countdown.remainingWeeks.text }}</div>
+            <div class="countdown-time">{{ countdown.remainingDays.text }}</div>
+            <div class="countdown-time">{{ countdown.remainingHours.text }}</div>
+            <div class="countdown-time">{{ countdown.remainingMinutes.text }}</div>
+            <div class="countdown-time">{{ countdown.remainingSeconds.text }}</div>
+          </div>
+           <div class="until-date">
+              until {{ formatedEndDateTime }}
+            </div>
         </div>
         <div v-else>
           Countdown finished!
         </div>
       </template>
-    </countdown>
+    </vue-countdown>
     <div class="row">
       <button
         class="run"
@@ -49,12 +65,12 @@
 <script>
 import format from 'date-fns/format';
 import addDays from 'date-fns/addDays';
-import Countdown from '../src/VueCountdown';
+import VueCountdown from '../src';
 
 export default {
   name: 'App',
   components: {
-    Countdown,
+    VueCountdown,
   },
   data() {
     return {
@@ -62,6 +78,12 @@ export default {
       endDateTime: null,
       hasCountdownFinished: false,
     };
+  },
+
+  computed: {
+    formatedEndDateTime() {
+      return format(this.endDateTime, 'do MMMM yyyy HH:mm:ss');
+    },
   },
 
   methods: {
@@ -102,6 +124,50 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.header {
+  margin-bottom: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header h1 {
+  font-size: 36px;
+}
+
+.header a {
+  font-size: 22px;
+  color: #343434;
+}
+
+.codeblock {
+  margin: 8px;
+  padding: 12px;
+  background: rgb(52, 52, 52);
+  color: white;
+  border-radius: 4px;
+}
+
+#vue-countdown {
+  display: flex;
+  justify-content: center;
+}
+
+.countdown-progress {
+  display: flex;
+  flex-direction: column;
+}
+
+.countdown-time {
+  margin-bottom: 4px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.until-date {
+  margin-top: 24px;
 }
 
 .row {

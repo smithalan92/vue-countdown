@@ -17,10 +17,13 @@ export default function (props, context) {
 
   const isRunning = ref(false);
 
-  let animationFrame = null;
-  let animationTimeout = null;
+  let tickTimeout = null;
 
   const run = async () => {
+    if (!isRunning.value) {
+      context.emit('start');
+    }
+
     isRunning.value = true;
 
     const startDateTime = props.startDateTime ? props.startDateTime : new Date();
@@ -59,15 +62,15 @@ export default function (props, context) {
 
     context.emit('tick', countdown);
 
-    animationTimeout = setTimeout(() => {
-      animationFrame = requestAnimationFrame(run);
+    tickTimeout = setTimeout(() => {
+      run();
     }, props.tickDelay);
   };
 
   const cancel = () => {
-    clearTimeout(animationTimeout);
-    cancelAnimationFrame(animationFrame);
+    clearTimeout(tickTimeout);
     isRunning.value = false;
+    context.emit('cancelled');
   };
 
   return {

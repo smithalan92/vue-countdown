@@ -1,14 +1,20 @@
 {
-  "name": "v-countdown",
-  "version": "0.1.0",
-  "private": true,
+  "name": "@smithalan2/vue-countdown",
+  "version": "1.0.0",
+  "private": false,
   "scripts": {
     "start": "vue-cli-service serve demo/main.js",
-    "build": "vue-cli-service build",
+    "build--package": "vue-cli-service build --target lib --name vue-countdown src/index.js",
+    "build--demo": "cross-env BUILD_DEMO=true vue-cli-service build --dest docs demo/main.js",
     "test": "vue-cli-service test:unit",
     "test--watch": "vue-cli-service test:unit --watch",
     "lint": "vue-cli-service lint"
   },
+  "main": "dist/vue-countdown.umd.js",
+  "files": [
+    "dist/vue-countdown.umd.js",
+    "dist/vue-countdown.umd.js.map"
+  ],
   "dependencies": {
     "core-js": "^3.6.5",
     "date-fns": "^2.16.1",
@@ -23,6 +29,7 @@
     "@vue/eslint-config-airbnb": "^5.0.2",
     "@vue/test-utils": "^2.0.0-0",
     "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.2",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^7.0.0-0",

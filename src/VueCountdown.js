@@ -25,7 +25,7 @@ export default {
     tickDelay: {
       type: Number,
       required: false,
-      default: 500,
+      default: 1000,
     },
   },
 

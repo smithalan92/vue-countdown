@@ -1,8 +1,5 @@
 import { reactive, toRaw } from 'vue';
-import intervalToDuration from 'date-fns/intervalToDuration';
 import useCountDown from '../../src/useCountdown';
-
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('useCountDown', () => {
   const context = {
@@ -36,6 +33,24 @@ describe('useCountDown', () => {
 
     expect(typeof run).toBe('function');
     expect(typeof cancel).toBe('function');
+  });
+
+  it('should emit a "start" event the first time run is executed', () => {
+    const props = reactive({
+      startDateTime: new Date('2030-10-01 00:01'),
+      endDateTime: new Date('2030-10-01 00:00'),
+      startImmediately: false,
+    });
+
+    const {
+      run,
+      isRunning,
+    } = useCountDown(props, context);
+
+    run();
+
+    expect(context.emit).toHaveBeenCalledWith('start');
+    expect(isRunning.value).toBe(false);
   });
 
   it('should calculate the correct countdown time when run is called', () => {
@@ -110,7 +125,7 @@ describe('useCountDown', () => {
   });
 
   it('should schedule another run execution after run is called', async () => {
-    jest.spyOn(global, 'requestAnimationFrame').mockReturnValueOnce(123);
+    jest.spyOn(global, 'setTimeout');
 
     const props = reactive({
       endDateTime: new Date('2030-10-01 00:00'),
@@ -124,16 +139,13 @@ describe('useCountDown', () => {
 
     run();
 
-    await delay(600);
-
     expect(isRunning.value).toBe(true);
 
-    expect(global.requestAnimationFrame).toHaveBeenCalled();
+    expect(global.setTimeout).toHaveBeenCalled();
   });
 
-  it('should clear any timeouts and animation requests and set isRunning to false when cancel is called', () => {
+  it('should clear any timeout, isRunning to false and emit cancelled when cancel is called', () => {
     jest.spyOn(global, 'clearTimeout');
-    jest.spyOn(global, 'cancelAnimationFrame');
 
     const props = reactive({
       endDateTime: new Date('2030-10-01 00:00'),
@@ -153,7 +165,7 @@ describe('useCountDown', () => {
     cancel();
 
     expect(global.clearTimeout).toHaveBeenCalled();
-    expect(global.cancelAnimationFrame).toHaveBeenCalled();
     expect(isRunning.value).toBe(false);
+    expect(context.emit).toHaveBeenCalledWith('cancelled');
   });
 });
